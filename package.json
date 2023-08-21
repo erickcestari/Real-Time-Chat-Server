@@ -1,8 +1,11 @@
 {
   "dependencies": {
     "@fastify/websocket": "^8.2.0",
+    "@prisma/client": "^5.1.1",
     "@types/node": "^20.5.1",
+    "dotenv": "^16.3.1",
     "fastify": "^4.21.0",
+    "prisma": "^5.1.1",
     "socket.io": "^4.7.2",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
@@ -17,7 +20,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsx watch src/server.ts",
-    "user": "tsx src/test/fakeUser.ts"
+    "user": "tsx src/test/fakeUser.ts",
+    "generate": "prisma generate --schema=./src/prisma/schema.prisma",
+    "migrate": "prisma migrate dev --schema=./src/prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",

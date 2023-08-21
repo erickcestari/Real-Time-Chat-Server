@@ -17,5 +17,5 @@ app.get('/',  (req, res) => {
 })
 
 app.listen({
-  port: 3333,
-}).then(() => console.log("Server is running on port 3333"));
+  port: Number(process.env.API_PORT),
+}).then(() => console.log(`Server is running on port ${process.env.API_PORT}`));
