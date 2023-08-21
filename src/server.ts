@@ -1,5 +1,6 @@
 import fastify from "fastify";
 import { Server } from "socket.io";
+import { userRoutes } from "./routes/userRoutes";
 
 const app = fastify();
 
@@ -11,6 +12,8 @@ io.on("connection", (socket) => {
     console.log('user disconnected');
   });
 });
+
+app.register(userRoutes, { prefix: "/user" });
 
 app.get('/',  (req, res) => {
   return {message: 'Hello World!'}

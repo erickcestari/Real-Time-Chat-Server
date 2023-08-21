@@ -8,7 +8,8 @@
     "prisma": "^5.1.1",
     "socket.io": "^4.7.2",
     "tsx": "^3.12.7",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "zod": "^3.22.2"
   },
   "name": "chat-back",
   "version": "1.0.0",
@@ -22,7 +23,8 @@
     "dev": "tsx watch src/server.ts",
     "user": "tsx src/test/fakeUser.ts",
     "generate": "prisma generate --schema=./src/prisma/schema.prisma",
-    "migrate": "prisma migrate dev --schema=./src/prisma/schema.prisma"
+    "migrate": "prisma migrate dev --schema=./src/prisma/schema.prisma",
+    "studio": "prisma studio --schema=./src/prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",
