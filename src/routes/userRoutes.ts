@@ -26,12 +26,20 @@ export const userRoutes = async (fastify: FastifyInstance) => {
           name: z.string().min(3).max(255)
         })
         const { name } = bodySchema.parse(request.body);
-        const user = await prisma.user.create({
+        const user = await prisma.user.findMany({
+          where: {
+            name: name
+          }
+        })
+        if (user.length > 0) {
+          return reply.status(400).send({ message: 'User already exists' });
+        }
+        const newUser = await prisma.user.create({
           data: {
             name,
           },
         });
-        return reply.status(201).send(user);
+        return reply.status(201).send(newUser);
       } catch (error) {
         console.log(error)
         return error

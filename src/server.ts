@@ -1,6 +1,7 @@
 import fastify from "fastify";
 import { Server } from "socket.io";
 import { userRoutes } from "./routes/userRoutes";
+import { messageRoutes } from "./routes/messageRoutes";
 
 const app = fastify();
 
@@ -14,6 +15,7 @@ io.on("connection", (socket) => {
 });
 
 app.register(userRoutes, { prefix: "/user" });
+app.register(messageRoutes, { prefix: "/message" })
 
 app.get('/',  (req, res) => {
   return {message: 'Hello World!'}
