@@ -1,0 +1,26 @@
+{
+  "dependencies": {
+    "@fastify/websocket": "^8.2.0",
+    "@types/node": "^20.5.1",
+    "fastify": "^4.21.0",
+    "socket.io": "^4.7.2",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
+  },
+  "name": "chat-back",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "@types/ws": "^8.5.5",
+    "socket.io-client": "^4.7.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tsx watch src/server.ts",
+    "user": "tsx src/test/fakeUser.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
