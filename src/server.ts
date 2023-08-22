@@ -2,14 +2,20 @@ import fastify from "fastify";
 import { Server } from "socket.io";
 import { userRoutes } from "./routes/userRoutes";
 import { messageRoutes } from "./routes/messageRoutes";
+import { UserController } from "./controllers/userController";
 
 const app = fastify();
 
 const io = new Server(app.server);
 
 io.on("connection", (socket) => {
-  socket.on("join", (username: string) => {
-    console.log(`${username} joineds`);
+  socket.on("join", async (username: string) => {
+    const userController = new UserController()
+    if(username.includes('favicon') || username.includes('username')) return
+    const messages = await userController.getLastUsers(username)
+    console.log(username)
+    console.log(messages)
+    socket.emit("messages", messages);
     
   })
   socket.on('disconnect', () => {

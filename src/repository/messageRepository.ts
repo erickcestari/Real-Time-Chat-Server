@@ -13,6 +13,7 @@ export class MessageRepository {
   }
 
   async getRecentsMessages(id: string) {
+    console.log(id)
     return await prisma.message.findMany({
       orderBy: {
         createdAt: 'desc'
