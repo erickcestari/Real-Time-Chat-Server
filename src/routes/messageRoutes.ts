@@ -1,6 +1,7 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import { prisma } from "../lib/prisma";
 import z from 'zod';
+import { MessageRepository } from "../repository/messageRepository";
 
 export const messageRoutes = async (fastify: FastifyInstance) => {
   fastify.route({
@@ -8,7 +9,8 @@ export const messageRoutes = async (fastify: FastifyInstance) => {
     url: '/',
     handler: async (request: FastifyRequest, reply: FastifyReply) => {
       try {
-        const list = await prisma.message.findMany();
+        const messageRepository = new MessageRepository()
+        const list = await messageRepository.get();
         return reply.status(200).send(list);
       } catch (error) {
         console.log(error)
@@ -22,20 +24,14 @@ export const messageRoutes = async (fastify: FastifyInstance) => {
     url: '/',
     handler: async (request: FastifyRequest, reply: FastifyReply) => {
       try {
-        console.log(request.body)
         const bodySchema = z.object({
           authorId: z.string().uuid(),
           receiverId: z.string().uuid(),
           content: z.string()
         })
         const { authorId, receiverId, content } = bodySchema.parse(request.body);
-        const message = await prisma.message.create({
-          data: {
-            authorId,
-            receiverId,
-            content
-          },
-        });
+        const messageRepository = new MessageRepository();
+        const message = await messageRepository.post(authorId, receiverId, content);
         return reply.status(201).send(message);
       } catch (error) {
         console.log(error)
@@ -43,5 +39,4 @@ export const messageRoutes = async (fastify: FastifyInstance) => {
       }
     }
   })
-
 }

@@ -8,15 +8,13 @@ const app = fastify();
 const io = new Server(app.server);
 
 io.on("connection", (socket) => {
-  console.log('a user connected');
-
+  socket.on("join", (username: string) => {
+    console.log(`${username} joineds`);
+    
+  })
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
-  socket
-    .on("chat message", (msg) => {
-      console.log(msg)
-    })
 });
 
 
