@@ -1,13 +1,8 @@
-import fastify from "fastify";
-import { Server } from "socket.io";
-import { userRoutes } from "./routes/userRoutes";
-import { messageRoutes } from "./routes/messageRoutes";
-import { UserController } from "./controllers/userController";
 import fastifyCors from "@fastify/cors";
-import { MessageController } from "./controllers/messageController";
-import { MessageRepository } from "./repository/messageRepository";
-import { Message } from "@prisma/client";
-import { UserRepository } from "./repository/userRepository";
+import fastify from "fastify";
+import { messageRoutes } from "./routes/messageRoutes";
+import { userRoutes } from "./routes/userRoutes";
+
 const app = fastify();
 
 app.register(fastifyCors, {
