@@ -24,7 +24,7 @@ export const userRoutes = async (fastify: FastifyInstance) => {
     handler: async (request: FastifyRequest, reply: FastifyReply) => {
       try {
         const bodySchema = z.object({
-          name: z.string().min(3).max(255)
+          name: z.string().max(35)
         })
         const { name } = bodySchema.parse(request.body);
         const userRepository = new UserRepository();

@@ -8,13 +8,6 @@ export class MessageController {
       const messageRepository = new MessageRepository()
       const user = await userRepository.getByName(name)
 
-      if (user.length === 0) {
-        const newUser = await userRepository.post(name)
-        const userId = newUser.id
-        const messages = await messageRepository.getRecentsMessages(userId)
-        return messages
-      }
-
       const userId = user[0].id
       const messages = await messageRepository.getRecentsMessages(userId)
 
@@ -43,7 +36,7 @@ export class MessageController {
     try {
       const messageRepository = new MessageRepository()
       const message = await messageRepository.post(authorId, receiverId, content)
-      
+
       return message
     }
     catch (error) {
