@@ -27,36 +27,6 @@ const io = require('socket.io')(app.server, {
 io.on("connection", (socket: any) => {
   socket.on("join", async (username: string) => {
     console.log(username, socket.id)
-    const userController = new UserController()
-    const messageController = new MessageController()
-    const messages = await messageController.getLastMessages(username.toLowerCase())
-
-    const users = await userController.getUsers(username.toLowerCase())
-
-    socket.emit("users", users);
-    socket.broadcast.emit("users", users);
-    socket.emit("messages", messages);
-    const userRepository = new UserRepository()
-
-    const user = await userRepository.getByName(username.toLowerCase())
-    console.log('user: ' + user)
-    socket.emit("user_author", user);
-
-  })
-  socket.on("sendMessage", async (message: Message) => {
-    const { authorId, receiverId, content } = message
-    const messageRepository = new MessageRepository()
-    const messageController = new MessageController()
-
-    console.log(receiverId, authorId)
-
-    await messageRepository.post(authorId, receiverId, content)
-
-    const messages = await messageController.getLastMessagesById(authorId)
-
-    console.log(messages)
-    socket.emit("messages", messages);
-    socket.broadcast.emit("messages", messages);
   })
 
   socket.on('disconnect', () => {
