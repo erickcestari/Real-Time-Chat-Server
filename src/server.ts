@@ -36,18 +36,19 @@ io.on("connection", (socket: any) => {
     socket.emit("users", users);
     socket.broadcast.emit("users", users);
     socket.emit("messages", messages);
+    const userRepository = new UserRepository()
 
-  })
-  socket.on("userAuthor", (username: string) => {
-    const userController = new UserRepository()
+    const user = await userRepository.getByName(username.toLowerCase())
+    console.log('user: ' + user)
+    socket.emit("user_author", user);
 
-    const user = userController.getByName(username.toLowerCase())
-    socket.emit("userAuthor", user);
   })
   socket.on("sendMessage", async (message: Message) => {
     const { authorId, receiverId, content } = message
     const messageRepository = new MessageRepository()
     const messageController = new MessageController()
+
+    console.log(receiverId, authorId)
 
     await messageRepository.post(authorId, receiverId, content)
 
