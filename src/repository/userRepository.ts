@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { prisma } from "../lib/prisma"
-import { user } from "@prisma/client";
+import { User } from "@prisma/client";
 
 export class UserRepository {
   async get() {
@@ -36,7 +36,7 @@ export class UserRepository {
     });
   }
 
-  async put(userData: user) {
+  async put(userData: User) {
     return await prisma.user.update({
       where: {
         id: userData.id

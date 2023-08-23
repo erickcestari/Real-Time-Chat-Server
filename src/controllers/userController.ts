@@ -2,17 +2,17 @@ import { MessageRepository } from "../repository/messageRepository";
 import { UserRepository } from "../repository/userRepository";
 
 export class UserController {
-  async getLastUsers(name: string) {
+  async getUsers(name: string) {
     try {
       const userRepository = new UserRepository()
       const messageRepository = new MessageRepository()
       const user = await userRepository.getByName(name)
 
-      const userId = user[0].id
-
-      const messages = await messageRepository.getRecentsMessages(userId)
-
-      return messages
+      if(user.length === 0) {
+        const newUser = await userRepository.post(name)
+        return userRepository.get()
+      }
+      return userRepository.get()
     }
     catch (error) {
       console.log(error)

@@ -7,20 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
+model User {
   id               String    @id @default(uuid())
   name             String
   createdAt        DateTime  @default(now())
-  messagesSent     message[] @relation("SentMessages")
-  messagesReceived message[] @relation("ReceivedMessages")
+  messagesSent     Message[] @relation("SentMessages")
+  messagesReceived Message[] @relation("ReceivedMessages")
 }
 
-model message {
+model Message {
   id           String   @id @default(uuid())
   content      String
   createdAt    DateTime @default(now())
-  authorUser   user     @relation(name: "SentMessages", fields: [authorId], references: [id])
+  authorUser   User     @relation(name: "SentMessages", fields: [authorId], references: [id])
   authorId     String
-  receiverUser user     @relation(name: "ReceivedMessages", fields: [receiverId], references: [id])
+  receiverUser User     @relation(name: "ReceivedMessages", fields: [receiverId], references: [id])
   receiverId   String
 }

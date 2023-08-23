@@ -1,6 +1,4 @@
-import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import { prisma } from "../lib/prisma";
-import z from 'zod';
 
 export class MessageRepository {
   async get() {
@@ -13,7 +11,6 @@ export class MessageRepository {
   }
 
   async getRecentsMessages(id: string) {
-    console.log(id)
     return await prisma.message.findMany({
       orderBy: {
         createdAt: 'desc'
@@ -40,7 +37,7 @@ export class MessageRepository {
         authorId,
         receiverId,
         content
-      },
+      }
     });
   }
 }
