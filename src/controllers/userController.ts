@@ -31,4 +31,23 @@ export class UserController {
       return error
     }
   }
+
+  async updateUserStatus(id: string, status: string) {
+    try {
+      const userRepository = new UserRepository()
+      const user = await userRepository.getById(id)
+
+      if (user.length === 0) {
+        return { message: 'User not found' }
+      }
+
+      const updatedUser = await userRepository.put({ ...user[0], status })
+
+      return updatedUser
+    }
+    catch (error) {
+      console.log(error)
+      return error
+    }
+  }
 }

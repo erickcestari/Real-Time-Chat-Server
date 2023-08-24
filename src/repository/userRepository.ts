@@ -30,7 +30,8 @@ export class UserRepository {
   async post(name: string) {
     return await prisma.user.create({
       data: {
-        name
+        name,
+        status: 'online'
       },
     });
   }

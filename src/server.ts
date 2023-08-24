@@ -26,8 +26,9 @@ const io: Server = new Server(app.server, {
 io.on("connection", (socket: Socket) => {
   socket.on("join", async (username: string) => {
     const userController = new UserController()
-    const user = await userController.getUserByName(username.toLocaleLowerCase())
+    const user: any = await userController.getUserByName(username.toLocaleLowerCase())
     socket.emit("author", user)
+    await userController.updateUserStatus(user.id, 'online')
     
     const allUsers = await userController.getUsers()
     socket.emit("getAllUsers", allUsers)
@@ -36,11 +37,13 @@ io.on("connection", (socket: Socket) => {
 
   socket.on("joinRoom", async (props: {authorId: string, receiverId: string}) => {
     const { authorId, receiverId } = props
+
     const messageController = new MessageController()
     const messages: any = await messageController.getMessagesChat(authorId, receiverId)
     const arrayUsers = [authorId, receiverId].sort()
     const roomName = arrayUsers.join("-")
 
+    socket.data.authorId = authorId
     socket.join(roomName)
     socket.emit("receiveMessage", messages)
   })
@@ -59,7 +62,14 @@ io.on("connection", (socket: Socket) => {
     socket.emit("receiveMessage", messages)
   })
 
-  socket.on('disconnect', () => {
+  socket.on('disconnect', async () => {
+    const userController = new UserController()
+    
+    await userController.updateUserStatus(socket.data.authorId, 'offline')
+    
+    const allUsers = await userController.getUsers()
+    socket.emit("getAllUsers", allUsers)
+    socket.broadcast.emit("getAllUsers", allUsers)
     console.log('user disconnected');
   });
 });
