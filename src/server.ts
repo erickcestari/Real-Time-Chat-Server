@@ -5,6 +5,7 @@ import { messageRoutes } from "./routes/messageRoutes";
 import { userRoutes } from "./routes/userRoutes";
 import { UserController } from "./controllers/userController";
 import { MessageController } from "./controllers/messageController";
+import { Message } from "@prisma/client";
 
 const app = fastify();
 
@@ -24,8 +25,6 @@ const io: Server = new Server(app.server, {
 
 io.on("connection", (socket: Socket) => {
   socket.on("join", async (username: string) => {
-    console.log(username, socket.id)
-
     const userController = new UserController()
     const user = await userController.getUserByName(username.toLocaleLowerCase())
     socket.emit("author", user)
@@ -38,19 +37,26 @@ io.on("connection", (socket: Socket) => {
   socket.on("joinRoom", async (props: {authorId: string, receiverId: string}) => {
     const { authorId, receiverId } = props
     const messageController = new MessageController()
-    const messages = await messageController.getMessagesChat(authorId, receiverId)
+    const messages: any = await messageController.getMessagesChat(authorId, receiverId)
+    const arrayUsers = [authorId, receiverId].sort()
+    const roomName = arrayUsers.join("-")
+
+    socket.join(roomName)
     socket.emit("receiveMessage", messages)
-    
   })
 
   socket.on("sendMessage", async (props: {authorId: string, receiverId: string, content: string}) => {
     const { authorId, receiverId, content } = props
     const messageController = new MessageController()
     await messageController.createNewMessage(authorId, receiverId, content)
+    const arrayUsers = [authorId, receiverId].sort()
+    const roomName = arrayUsers.join("-")
+
+    socket.join(roomName)
     
     const messages = await messageController.getMessagesChat(authorId, receiverId)
+    socket.to(roomName).emit("receiveMessage", messages)
     socket.emit("receiveMessage", messages)
-    socket.broadcast.emit("updateMessages")
   })
 
   socket.on('disconnect', () => {
