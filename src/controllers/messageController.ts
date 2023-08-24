@@ -32,6 +32,19 @@ export class MessageController {
     }
   }
 
+  async getMessagesChat(authorId: string, receiverId: string) {
+    try {
+      const messageRepository = new MessageRepository()
+      const messages = await messageRepository.getMessagesChat(authorId, receiverId)
+
+      return messages
+    }
+    catch (error) {
+      console.log(error)
+      return error
+    }
+  }
+
   async createNewMessage(authorId: string, receiverId: string, content: string) {
     try {
       const messageRepository = new MessageRepository()

@@ -4,6 +4,7 @@ import { Server, Socket } from "socket.io";
 import { messageRoutes } from "./routes/messageRoutes";
 import { userRoutes } from "./routes/userRoutes";
 import { UserController } from "./controllers/userController";
+import { MessageController } from "./controllers/messageController";
 
 const app = fastify();
 
@@ -32,6 +33,24 @@ io.on("connection", (socket: Socket) => {
     const allUsers = await userController.getUsers()
     socket.emit("getAllUsers", allUsers)
     socket.broadcast.emit("getAllUsers", allUsers)
+  })
+
+  socket.on("joinRoom", async (props: {authorId: string, receiverId: string}) => {
+    const { authorId, receiverId } = props
+    const messageController = new MessageController()
+    const messages = await messageController.getMessagesChat(authorId, receiverId)
+    socket.emit("receiveMessage", messages)
+    
+  })
+
+  socket.on("sendMessage", async (props: {authorId: string, receiverId: string, content: string}) => {
+    const { authorId, receiverId, content } = props
+    const messageController = new MessageController()
+    await messageController.createNewMessage(authorId, receiverId, content)
+    
+    const messages = await messageController.getMessagesChat(authorId, receiverId)
+    socket.emit("receiveMessage", messages)
+    socket.broadcast.emit("updateMessages")
   })
 
   socket.on('disconnect', () => {
