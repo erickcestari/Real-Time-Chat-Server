@@ -1,4 +1,4 @@
-# Real-Time Chat Application
+# Real-Time Chat Server
 
 Welcome to our Real-Time Chat Application repository! This project leverages the power of modern web technologies to provide a seamless and interactive chatting experience.
 
