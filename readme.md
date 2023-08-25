@@ -25,7 +25,7 @@ Welcome to our Real-Time Chat Server repository! This project leverages the powe
 To run the chat server locally, follow these steps:
 
 1. Clone this repository: `git clone https://github.com/erickcestari/Real-Time-Chat-Server.git`
-2. Navigate to the project directory: `cd real-time-chat-app`
+2. Navigate to the project directory: `cd real-time-chat-server`
 3. Install dependencies: `npm install or yarn`
 4. Set up the database schema using Prisma: `npx migrate or yarn migrate`
 5. Start the development server: `npm run dev or yarn dev`
