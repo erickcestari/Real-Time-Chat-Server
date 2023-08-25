@@ -25,7 +25,8 @@
     "user": "tsx src/test/fakeUser.ts",
     "generate": "prisma generate --schema=./src/prisma/schema.prisma",
     "migrate": "prisma migrate dev --schema=./src/prisma/schema.prisma",
-    "studio": "prisma studio --schema=./src/prisma/schema.prisma"
+    "studio": "prisma studio --schema=./src/prisma/schema.prisma",
+    "ts-build": "tsc"
   },
   "keywords": [],
   "author": "",
