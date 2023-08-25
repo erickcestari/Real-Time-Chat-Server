@@ -2,6 +2,9 @@
 
 Welcome to our Real-Time Chat Server repository! This project leverages the power of modern web technologies to provide a seamless and interactive chatting experience.
 
+![Screenshot](screenHome.png)
+![Screenshot](screenChat.png)
+
 ## Features
 
 - **Real-Time Messaging**: Utilizing Socket.IO for real-time communication, this chat app ensures that messages are instantly delivered to all participants.
