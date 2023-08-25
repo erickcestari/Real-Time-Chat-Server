@@ -1,6 +1,6 @@
 # Real-Time Chat Server
 
-Welcome to our Real-Time Chat Application repository! This project leverages the power of modern web technologies to provide a seamless and interactive chatting experience.
+Welcome to our Real-Time Chat Server repository! This project leverages the power of modern web technologies to provide a seamless and interactive chatting experience.
 
 ## Features
 
@@ -19,15 +19,15 @@ Welcome to our Real-Time Chat Application repository! This project leverages the
 
 ## Getting Started
 
-To run the chat application locally, follow these steps:
+To run the chat server locally, follow these steps:
 
-1. Clone this repository: `git clone https://github.com/erickcestari/Real-Time-Chat-Application.git`
+1. Clone this repository: `git clone https://github.com/erickcestari/Real-Time-Chat-server.git`
 2. Navigate to the project directory: `cd real-time-chat-app`
 3. Install dependencies: `npm install or yarn`
 4. Set up the database schema using Prisma: `npx migrate or yarn migrate`
 5. Start the development server: `npm run dev or yarn dev`
 
-Open your browser and visit `http://localhost:3000` to access the chat application.
+Open your browser and visit `http://localhost:3000` to access the chat server.
 
 ## Contributing
 
